@@ -1,3 +1,3 @@
 import { createReducer } from '../../src'
 
-export default createReducer('subjects')
+export default createReducer(['subjects'])

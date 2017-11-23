@@ -11,7 +11,8 @@ yarn add @fakundo/redux-entities
 
 ```javascript
 import { createReducer } from 'redux-entities'
-export default createReducer('subjects', 'users')
+const collectionNames = ['subjects', 'users']
+export default createReducer(collectionNames)
 ```
 
 ### Actions (action creators)
@@ -28,3 +29,21 @@ export default createReducer('subjects', 'users')
 - getEntities(state, collectionName, ...entityKeys)
 - getEntity(state, collectionName, entityKey)
 - getCollection(state, collectionName)
+
+### With custom reducer
+
+```javascript
+import { createReducer } from 'redux-entities'
+
+const createCustomReducer = initialState => (state, action) => {
+  switch (action.type) {
+    case LOG_OUT:
+      return initialState
+
+    detault:
+      return state
+  }
+}
+
+export default createReducer(['subjects', 'users'], createCustomReducer)
+```

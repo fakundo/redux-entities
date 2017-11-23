@@ -5,14 +5,16 @@ import reduce from 'lodash/reduce'
 import assign from 'lodash/assign'
 import * as actions from './actions'
 
-export default (...collectionNames) => {
+export default (collectionNames, createCustomReducer = () => state => state) => {
   const initialState = reduce(
     collectionNames,
     (acc, collectionName) => assign(acc, { [collectionName]: {} }),
     {}
   )
 
-  return (state = initialState, action) => {
+  const customReducer = createCustomReducer(initialState)
+
+  return (state = initialState, action, ...rest) => {
     switch (action.type) {
       case actions.REPLACE_ENTITIES: {
         const { collectionName, entities } = action
@@ -66,7 +68,7 @@ export default (...collectionNames) => {
         return mapValues(state, () => ({}))
 
       default:
-        return state
+        return customReducer(state, action, ...rest)
     }
   }
 }
