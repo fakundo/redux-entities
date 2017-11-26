@@ -8,7 +8,7 @@ import * as actions from './actions'
 export default (collectionNames, createCustomReducer = () => state => state) => {
   const initialState = reduce(
     collectionNames,
-    (acc, collectionName) => assign(acc, { [collectionName]: {} }),
+    (acc, collectionName) => assign(acc, { [collectionName]: undefined }),
     {}
   )
 
