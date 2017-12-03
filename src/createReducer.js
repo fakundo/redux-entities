@@ -50,22 +50,28 @@ export default (collectionNames, createCustomReducer = () => state => state) => 
         }
       }
 
-      case actions.REPLACE_ENTITY_COLLECTIONS: {
-        const { collections } = action
-        return { ...state, ...collections }
-      }
+      case actions.REPLACE_ENTITY_COLLECTIONS:
+        return { ...state, ...action.collections }
 
       case actions.MERGE_ENTITY_COLLECTIONS: {
-        const { collections } = action
         const mergedCollections = mapValues(
-          collections,
+          action.collections,
           (collection, collectionName) => merge({}, state[collectionName], collection)
         )
         return { ...state, ...mergedCollections }
       }
 
+      case actions.PURGE_ENTITY_COLLECTIONS: {
+        const purgedCollections = reduce(
+          action.collectionNames,
+          (acc, collectionName) => assign(acc, { [collectionName]: undefined }),
+          {}
+        )
+        return { ...state, ...purgedCollections }
+      }
+
       case actions.PURGE_ALL_ENTITY_COLLECTIONS:
-        return mapValues(state, () => ({}))
+        return mapValues(state, () => undefined)
 
       default:
         return customReducer(state, action, ...rest)

@@ -22,6 +22,7 @@ export default createReducer(collectionNames)
 - deleteEntities(collectionName, ...entityKeys)
 - replaceCollections(collections)
 - mergeCollections(collections)
+- purgeCollections(...collectionNames)
 - purgeAllCollections()
 
 ### Selectors
