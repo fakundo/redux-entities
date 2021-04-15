@@ -1,1 +1,1 @@
-export entities from './entities'
+export { default as entities } from './entities'

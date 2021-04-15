@@ -6,26 +6,30 @@ const port = 3000
 
 module.exports = {
   entry: [
-    'babel-polyfill',
     `webpack-dev-server/client?http://${host}:${port}`,
     path.resolve(__dirname, 'examples/index'),
   ],
   devtool: 'inline-source-map',
   plugins: [
-    new HtmlWebpackPlugin()
+    new HtmlWebpackPlugin(),
   ],
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         use: 'babel-loader',
-        exclude: /node_modules/
-      }
-    ]
+        exclude: /lib/,
+      },
+    ],
+  },
+  resolve: {
+    alias: {
+      '@fakundo/redux-entities': path.resolve(__dirname),
+    },
   },
   devServer: {
     host,
     port,
-    stats: 'minimal'
-  }
+    stats: 'minimal',
+  },
 }

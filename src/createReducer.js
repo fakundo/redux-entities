@@ -5,11 +5,11 @@ import reduce from 'lodash/reduce'
 import assign from 'lodash/assign'
 import * as actions from './actions'
 
-export default (collectionNames, createCustomReducer = () => state => state) => {
+export const createReducer = (collectionNames, createCustomReducer = () => (state) => state) => {
   const initialState = reduce(
     collectionNames,
     (acc, collectionName) => assign(acc, { [collectionName]: undefined }),
-    {}
+    {},
   )
 
   const customReducer = createCustomReducer(initialState)
@@ -22,8 +22,8 @@ export default (collectionNames, createCustomReducer = () => state => state) => 
           ...state,
           [collectionName]: {
             ...state[collectionName],
-            ...entities
-          }
+            ...entities,
+          },
         }
       }
 
@@ -31,14 +31,14 @@ export default (collectionNames, createCustomReducer = () => state => state) => 
         const { collectionName, entities } = action
         const mergedEntities = mapValues(
           entities,
-          (entity, key) => merge({}, state[collectionName][key], entity)
+          (entity, key) => merge({}, state[collectionName][key], entity),
         )
         return {
           ...state,
           [collectionName]: {
             ...state[collectionName],
-            ...mergedEntities
-          }
+            ...mergedEntities,
+          },
         }
       }
 
@@ -46,7 +46,7 @@ export default (collectionNames, createCustomReducer = () => state => state) => 
         const { collectionName, entityKeys } = action
         return {
           ...state,
-          [collectionName]: omit(state[collectionName], entityKeys)
+          [collectionName]: omit(state[collectionName], entityKeys),
         }
       }
 
@@ -56,7 +56,7 @@ export default (collectionNames, createCustomReducer = () => state => state) => 
       case actions.MERGE_ENTITY_COLLECTIONS: {
         const mergedCollections = mapValues(
           action.collections,
-          (collection, collectionName) => merge({}, state[collectionName], collection)
+          (collection, collectionName) => merge({}, state[collectionName], collection),
         )
         return { ...state, ...mergedCollections }
       }
@@ -65,7 +65,7 @@ export default (collectionNames, createCustomReducer = () => state => state) => 
         const purgedCollections = reduce(
           action.collectionNames,
           (acc, collectionName) => assign(acc, { [collectionName]: undefined }),
-          {}
+          {},
         )
         return { ...state, ...purgedCollections }
       }

@@ -5,20 +5,19 @@ import isEmpty from 'lodash/isEmpty'
 import { getSubjects } from '../selectors/subjects'
 import { fetchSubjectsAndDispatch } from '../actions/subjects'
 
-const mapStateToProps = state => ({
-  subjects: getSubjects(state)
+const mapStateToProps = (state) => ({
+  subjects: getSubjects(state),
 })
 
 const mapDispatchToProps = {
-  fetchSubjectsAndDispatchAction: fetchSubjectsAndDispatch
+  fetchSubjectsAndDispatchAction: fetchSubjectsAndDispatch,
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class Subjects extends Component {
+class Subjects extends Component {
   static propTypes = {
     subjects: PropTypes.object,
     fetchSubjectsAndDispatchAction: PropTypes.func.isRequired,
-  };
+  }
 
   componentDidMount() {
     const { fetchSubjectsAndDispatchAction, subjects } = this.props
@@ -29,10 +28,11 @@ export default class Subjects extends Component {
 
   render() {
     const { subjects } = this.props
-    // eslint-disable-next-line
-    console.warn('Render Subjects: ', subjects)
-    return isEmpty(subjects) ?
-      <span>Loading ...</span> :
-      <pre>{ JSON.stringify(subjects, null, ' ') }</pre>
+    console.warn('Render Subjects: ', subjects) // eslint-disable-line
+    return isEmpty(subjects)
+      ? <span>Loading...</span>
+      : <pre>{ JSON.stringify(subjects, null, ' ') }</pre>
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Subjects)

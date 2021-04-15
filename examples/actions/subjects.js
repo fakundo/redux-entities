@@ -1,16 +1,17 @@
-import { replaceCollections } from '../../src'
+import { replaceCollections } from '@fakundo/redux-entities'
 
-export const fetchSubjects = () =>
-  (new Promise((resolve) => {
+export const fetchSubjects = () => (
+  new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         1: { id: 1, name: 'Math' },
         2: { id: 2, name: 'Chemistry' },
         3: { id: 3, name: 'English' },
-        4: { id: 4, name: 'Philosophy' }
+        4: { id: 4, name: 'Philosophy' },
       })
     }, (Math.random() * 2000) + 1000)
-  }))
+  })
+)
 
 export const fetchSubjectsAndDispatch = () => async (dispatch) => {
   const subjects = await fetchSubjects()

@@ -9,7 +9,7 @@ yarn add @fakundo/redux-entities
 
 ### Creating reducer
 
-```javascript
+```js
 import { createReducer } from 'redux-entities'
 const collectionNames = ['subjects', 'users']
 export default createReducer(collectionNames)
@@ -33,7 +33,7 @@ export default createReducer(collectionNames)
 
 ### With custom reducer
 
-```javascript
+```js
 import { createReducer } from 'redux-entities'
 
 const createCustomReducer = initialState => (state, action) => {
