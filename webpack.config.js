@@ -17,8 +17,20 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        use: 'babel-loader',
-        exclude: /lib/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react',
+            ],
+            plugins: [
+              '@babel/plugin-proposal-class-properties',
+              '@babel/transform-runtime',
+            ],
+          },
+        },
       },
     ],
   },
